@@ -1,0 +1,11 @@
+name: evozone
+recipe: symfony
+config:
+  webroot: public
+  php: 8.1
+  xdebug: true
+  via: nginx
+
+services:
+  pma:
+    type: phpmyadmin

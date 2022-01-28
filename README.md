@@ -13,10 +13,22 @@ You have estimated it takes 4 weeks to build this solution. You have 3 days. Goo
 
 ## Technical documentation
 ### Data and Domain model
-In this section, please describe the main entities you managed to identify, the relationships between them and how you mapped them in the database.
+In this section, please describe the main entities you managed to identify, the relationships between them and how you mapped them in the database.  
+
+program (programType, startDateTime, endDateTime, maxParticipants, room) - available as resource - CRUD by ROLE_ADMIN, only get for others (no need to be users)    
+... validations each program must not interfere with other in time and room ...
+programType - CRUD by ROLE_ADMIN - no restriction here   
+room () ManyToMany ProgramType ....  will see each room may have different programTypes and different maxParticipants... 
+but probably too much for this implementation.... 
+books (cnp, program) ... 
+validations....if someone is registered for a program can't be registered to other program in same interval...
+Can delete a booked program???
+
+
 ### Application architecture
 In this section, please provide a brief overview of the design of your application and highlight the main components and the interaction between them.
 ###  Implementation
+
 ##### Functionalities
 For each of the following functionalities, please tick the box if you implemented it and describe its input and output in your application:
 
@@ -36,10 +48,11 @@ Please fill in the following table with the technologies you used in order to wo
 | Name | Choice |
 | ------ | ------ |
 | Operating system (OS) | e.g. Ubuntu 20.04 |
-| Database  | e.g. MySQL 8.0|
-| Web server| e.g. Nginx |
-| PHP | e.g. 7.0 |
+| Database  | e.g. MySQL 7|
+| Web server| e.g. symfony server -d or lando | - 
+| PHP | e.g. 8.1 |
 | IDE | e.g. PhpStorm |
+As a drupal developer I'm using lando for my everyday work.
 
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
@@ -47,13 +60,22 @@ In this section, please list the steps and/ or tools you've used in order to tes
 ## Feedback
 In this section, please let us know what is your opinion about this experience and how we can improve it:
 
-1. Have you ever been involved in a similar experience? If so, how was this one different?
-2. Do you think this type of selection process is suitable for you?
-3. What's your opinion about the complexity of the requirements?
-4. What did you enjoy the most?
-5. What was the most challenging part of this anti hackathon?
-6. Do you think the time limit was suitable for the requirements?
-7. Did you find the resources you were sent on your email useful?
-8. Is there anything you would like to improve to your current implementation?
+1. Have you ever been involved in a similar experience? If so, how was this one different?  
+No  
+2. Do you think this type of selection process is suitable for you?  
+Don't know... First I want to learn symfony if possible from professionals better... then any test you like.  
+3. What's your opinion about the complexity of the requirements?  
+For me is complex ... but this is my first day...  
+4. What did you enjoy the most?  
+skype conversation... is nice to see that others may have same interests  
+5. What was the most challenging part of this anti hackathon?  
+I'll see...  
+6. Do you think the time limit was suitable for the requirements?  
+Don't know...
+7. Did you find the resources you were sent on your email useful?  
+Yes  
+8. Is there anything you would like to improve to your current implementation?  
+I prefer to have the possibility to learn from professionals with no payment!  
+Probably you may still offer us such a possibility... with no obligation from neither part...
 9. What would you change regarding this anti hackathon?
-
+Answered before... but that's my case...
