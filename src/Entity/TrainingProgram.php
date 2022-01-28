@@ -15,8 +15,8 @@ class TrainingProgram
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 50)]
-    private $trainingProgramType;
+    #[ORM\Column(type: 'string', length: 100)]
+    private $name;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $startDateTime;
@@ -27,22 +27,28 @@ class TrainingProgram
     #[ORM\Column(type: 'integer')]
     private $numarMaximParticipanti;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\ManyToOne(targetEntity: ProgramType::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $programType;
+
+    #[ORM\ManyToOne(targetEntity: Room::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $room;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTrainingProgramType(): ?string
+    public function getName(): ?string
     {
-        return $this->trainingProgramType;
+        return $this->name;
     }
 
-    public function setTrainingProgramType(string $trainingProgramType): self
+    public function setName(string $name): self
     {
-        $this->trainingProgramType = $trainingProgramType;
+        $this->name = $name;
 
         return $this;
     }
@@ -83,15 +89,28 @@ class TrainingProgram
         return $this;
     }
 
-    public function getRoom(): ?string
+    public function getProgramType(): ?ProgramType
+    {
+        return $this->programType;
+    }
+
+    public function setProgramType(?ProgramType $programType): self
+    {
+        $this->programType = $programType;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
     {
         return $this->room;
     }
 
-    public function setRoom(string $room): self
+    public function setRoom(?Room $room): self
     {
         $this->room = $room;
 
         return $this;
     }
+
 }
