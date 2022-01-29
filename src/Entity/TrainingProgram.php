@@ -15,6 +15,9 @@ class TrainingProgram
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * A training program name to better identify it ex: Pillates class for beginners
+     */
     #[ORM\Column(type: 'string', length: 100)]
     private $name;
 
@@ -34,6 +37,9 @@ class TrainingProgram
     #[ORM\ManyToOne(targetEntity: Room::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $room;
+
+    #[ORM\Column(type: 'integer')]
+    private $participants;
 
 
     public function getId(): ?int
@@ -109,6 +115,18 @@ class TrainingProgram
     public function setRoom(?Room $room): self
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getParticipants(): ?int
+    {
+        return $this->participants;
+    }
+
+    public function setParticipants(int $participants): self
+    {
+        $this->participants = $participants;
 
         return $this;
     }
