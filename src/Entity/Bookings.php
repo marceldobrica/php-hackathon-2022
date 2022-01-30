@@ -2,37 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Action\NotFoundAction;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\BookingsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AppAssert;
 
 #[ORM\Entity(repositoryClass: BookingsRepository::class)]
 #[ApiResource(
-//    collectionOperations: [
-//        'get' => [
-//            'controller' => NotFoundAction::class,
-//            'read' => false,
-//            'output' => false,
-//        ],
-////        'get_by_cnp' => [
-////            'controller' => NotFoundAction::class,
-////            'read' => false,
-////            'output' => false,
-////        ],
-//        'post'],
-//    itemOperations: [
-//        'get' => [
-//            'controller' => NotFoundAction::class,
-//            'read' => false,
-//            'output' => false,
-//        ],
-//        'delete' => [
-//            'path' => '/{cnp}/{id}',
-//            'controller' => NotFoundAction::class,
-//        ]
-//    ]
+//    normalizationContext: ["groups" => ["bookings:read"]],
+//    denormalizationContext: ["groups" => ["bookings:write"]],
+//    attributes: ['pagination_items_per_page' => 3]
+
 )]
+#[ApiFilter(SearchFilter::class, properties: ['cnp' => 'exact'])]
 class Bookings
 {
     #[ORM\Id]
@@ -41,19 +28,25 @@ class Bookings
     private $id;
 
     #[ORM\Column(type: 'string', length: 13)]
-    #[Asert\Regex('')]
+    #[Groups(["bookings:read", "bookings:write"])]
+    #[Assert\Regex('/^[1-9]\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(0[1-9]|[1-4]\d|5[0-2]|99)(00[1-9]|0[1-9]\d|[1-9]\d\d)\d$/')]
+    //...copied from internet...todo verify...
+    #[AppAssert\ConstrainsBookingProgram]
     private $cnp;
 
-    #[ORM\ManyToOne(targetEntity: TrainingProgram::class)]
+    #[ORM\ManyToOne(targetEntity: Program::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["bookings:read", "bookings:write"])]
+    #[Assert\NotBlank]
+    #[AppAssert\ConstrainsBookingProgram]
     private $program;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -73,21 +66,21 @@ class Bookings
         return $this;
     }
 
-    public function getProgram(): ?TrainingProgram
+    public function getProgram(): ?Program
     {
         return $this->program;
     }
 
-    public function setProgram(?TrainingProgram $program): self
+    public function setProgram(?Program $program): self
     {
         $this->program = $program;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?string //?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->createdAt->format('yy-m-d h:m');
     }
 
 }

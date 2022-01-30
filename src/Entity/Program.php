@@ -5,29 +5,38 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TrainingProgramRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TrainingProgramRepository::class)]
-#[ApiResource]
-class TrainingProgram
+#[ApiResource(
+//    normalizationContext:['groups' => ['bookings:read', 'program:read']],
+//    denormalizationContext: ['groups' => ['bookings:write', 'program:write']]
+)]
+class Program
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['bookings:read', 'program:read'])]
     private $id;
 
     /**
      * A training program name to better identify it ex: Pillates class for beginners
      */
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(['bookings:read','program:read', 'program:write'])]
     private $name;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['bookings:read', 'write', 'program'])]
     private $startDateTime;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['bookings:read', 'write', 'program'])]
     private $endDateTime;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read', 'write', 'program'])]
     private $numarMaximParticipanti;
 
     #[ORM\ManyToOne(targetEntity: ProgramType::class)]
@@ -40,7 +49,6 @@ class TrainingProgram
 
     #[ORM\Column(type: 'integer')]
     private $participants;
-
 
     public function getId(): ?int
     {
@@ -59,24 +67,24 @@ class TrainingProgram
         return $this;
     }
 
-    public function getStartDateTime(): ?\DateTimeImmutable
+    public function getStartDateTime(): ?string
     {
-        return $this->startDateTime;
+        return $this->startDateTime->format('Y-m-d H:i');
     }
 
-    public function setStartDateTime(\DateTimeImmutable $startDateTime): self
+    public function setStartDateTime(\DateTimeInterface $startDateTime): self
     {
         $this->startDateTime = $startDateTime;
 
         return $this;
     }
 
-    public function getEndDateTime(): ?\DateTimeImmutable
+    public function getEndDateTime(): ?string
     {
-        return $this->endDateTime;
+        return $this->endDateTime->format('Y-m-d H:i');
     }
 
-    public function setEndDateTime(\DateTimeImmutable $endDateTime): self
+    public function setEndDateTime(\DateTimeInterface $endDateTime): self
     {
         $this->endDateTime = $endDateTime;
 

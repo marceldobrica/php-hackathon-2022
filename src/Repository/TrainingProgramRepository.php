@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\TrainingProgram;
+use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method TrainingProgram|null find($id, $lockMode = null, $lockVersion = null)
- * @method TrainingProgram|null findOneBy(array $criteria, array $orderBy = null)
- * @method TrainingProgram[]    findAll()
- * @method TrainingProgram[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Program|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Program|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Program[]    findAll()
+ * @method Program[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TrainingProgramRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TrainingProgram::class);
+        parent::__construct($registry, Program::class);
     }
 
     // /**

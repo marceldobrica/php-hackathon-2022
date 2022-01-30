@@ -48,11 +48,10 @@ Please fill in the following table with the technologies you used in order to wo
 | Name | Choice |
 | ------ | ------ |
 | Operating system (OS) | e.g. Ubuntu 20.04 |
-| Database  | e.g. MySQL 7|
-| Web server| e.g. symfony server -d or lando | - 
+| Database  | e.g. MySQL 5.7|
+| Web server| e.g. symfony server -d and docker-compose up -d | - 
 | PHP | e.g. 8.1 |
 | IDE | e.g. PhpStorm |
-As a drupal developer I'm using lando for my everyday work.
 
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
