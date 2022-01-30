@@ -78,3 +78,6 @@ I prefer to have the possibility to learn from professionals with no payment!
 Probably you may still offer us such a possibility... with no obligation from neither part...
 9. What would you change regarding this anti hackathon?
 Answered before... but that's my case...
+
+Oricum a fost o experienta interesanta. Vroiam sa invat symfony... si se pare ca este un framework frumos.
+Inca nu stiu mare lucru dar daca in aceste 3 zile am reusit (atat cat am reusit)... probabil ca voi reusi sa-l invat si fara ajutor....oricum ajutorul ar fi bine venit - NO COST / NO OBLIGATIONS!!

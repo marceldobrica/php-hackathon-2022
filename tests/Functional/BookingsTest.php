@@ -60,7 +60,7 @@ class BookingsTest extends ApiTestCase
         $twoweeks = new \DateInterval('P10D');
         $start = $start->add($twoweeks);
         //each program takes 1 hour
-        $period = new \DateInterval('PT1H');
+        $period = new \DateInterval('P10DT1H');
         $end = $start->add($period);
 
         $program->setStartDateTime($start);
@@ -118,7 +118,7 @@ class BookingsTest extends ApiTestCase
         $twoweeks = new \DateInterval('P10D');
         $start = $start->add($twoweeks);
         //each program takes 1 hour
-        $period = new \DateInterval('PT1H');
+        $period = new \DateInterval('P10DT1H');
         $end = $start->add($period);
 
         $program->setStartDateTime($start);
@@ -176,7 +176,7 @@ class BookingsTest extends ApiTestCase
             $twoweeks = new \DateInterval('P10D');
             $start = $start->add($twoweeks);
         //each program takes 1 hour
-            $period = new \DateInterval('PT1H');
+            $period = new \DateInterval('P10DT1H');
             $end = $start->add($period);
         $program->setStartDateTime($start);
         $program->setEndDateTime($end);
@@ -205,7 +205,7 @@ class BookingsTest extends ApiTestCase
         $twoweeksand20min = new \DateInterval('P10DT20M');
         $start = $start->add($twoweeksand20min);
         //each program takes 1 hour
-        $period = new \DateInterval('PT1H');
+        $period = new \DateInterval('P10DT1H20M');
         $end = $start->add($period);
         $program2->setStartDateTime($start);
         $program2->setEndDateTime($end);
@@ -235,7 +235,7 @@ class BookingsTest extends ApiTestCase
                 'program' => '/api/programs/' . $program2->getId(),
             ],
         ]);
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(422);
 
     }
 }

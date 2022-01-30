@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Bookings;
+use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,27 @@ class BookingsRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Bookings::class);
+    }
+
+    /**
+     * @param String $cnp
+     * @param Program $program
+     * @return array
+     */
+    public function validateBookingProgram(String $cnp, Program $program): array
+    {
+        $a = $this->createQueryBuilder('b')
+            ->select('COUNT(b.cnp) AS TOTAL')
+            ->innerJoin('b.program' , 'p')
+            ->Where('b.cnp = :cnp AND p.endDateTime> :startdate AND p.startDateTime < :startdate')
+            ->orWhere('b.cnp = :cnp AND p.endDateTime> :enddate AND p.startDateTime < :enddate')
+            ->setParameter(':cnp', $cnp)
+            ->setParameter(':startdate', $program->getStartDateTime())
+            ->setParameter(':enddate', $program->getEndDateTime())
+            ->getQuery();
+        return $a->getResult();
+
+
     }
 
     // /**

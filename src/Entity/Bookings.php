@@ -74,13 +74,13 @@ class Bookings
     public function setProgram(?Program $program): self
     {
         $this->program = $program;
-
+        $program->setParticipants($program->getParticipants() + 1);
         return $this;
     }
 
     public function getCreatedAt(): ?string //?\DateTimeInterface
     {
-        return $this->createdAt->format('yy-m-d h:m');
+        return $this->createdAt->format('Y-m-d H:i');
     }
 
 }
