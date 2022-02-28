@@ -3,7 +3,6 @@
 namespace App\Validator;
 
 use App\Repository\BookingsRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -14,13 +13,13 @@ class ConstrainsBookingProgramValidator extends ConstraintValidator
     private static $program;
 
     /**
-     * @var ManagerRegistry
+     * @var BookingsRepository
      */
-    private ManagerRegistry $managerRegistry;
+    private BookingsRepository $bookingsRepository;
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(BookingsRepository $BookingRepository)
     {
-        $this->managerRegistry = $managerRegistry;
+        $this->bookingRepository = $BookingRepository;
     }
 
 
@@ -52,8 +51,7 @@ class ConstrainsBookingProgramValidator extends ConstraintValidator
         }
 
         if (isset(self::$cnp) && isset(self::$program)) {
-            $BookingRepository = new BookingsRepository( $this->managerRegistry);
-            $result = $BookingRepository->validateBookingProgram(self::$cnp, self::$program);
+            $result = $this->bookingRepository->validateBookingProgram(self::$cnp, self::$program);
             if (isset($result[0]['TOTAL']) && $result[0]['TOTAL']>0) {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
