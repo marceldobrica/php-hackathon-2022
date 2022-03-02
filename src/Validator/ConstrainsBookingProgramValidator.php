@@ -2,24 +2,20 @@
 
 namespace App\Validator;
 
+use App\Entity\Program;
 use App\Repository\BookingsRepository;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class ConstrainsBookingProgramValidator extends ConstraintValidator
 {
-    private static $cnp;
-    private static $program;
-
-    /**
-     * @var BookingsRepository
-     */
+    private static string $cnp;
+    private static Program $program;
     private BookingsRepository $bookingsRepository;
 
-    public function __construct(BookingsRepository $BookingRepository)
+    public function __construct(BookingsRepository $BookingsRepository)
     {
-        $this->bookingRepository = $BookingRepository;
+        $this->bookingsRepository = $BookingsRepository;
     }
 
 
@@ -33,30 +29,27 @@ class ConstrainsBookingProgramValidator extends ConstraintValidator
         if (null === $value || '' === $value) {
             return;
         }
-        if (gettype($value) === 'string' ) {
+        if (gettype($value) === 'string') {
             if (!isset(self::$cnp)) {
                 self::$cnp = $value;
-            }
-            else {
+            } else {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
         }
-        if (gettype($value) === 'object' ) {
+
+        if (gettype($value) === 'object') {
             if (!isset(self::$program)) {
                 self::$program = $value;
-            }
-            else {
+            } else {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
         }
 
         if (isset(self::$cnp) && isset(self::$program)) {
-            $result = $this->bookingRepository->validateBookingProgram(self::$cnp, self::$program);
-            if (isset($result[0]['TOTAL']) && $result[0]['TOTAL']>0) {
+            $result = $this->bookingsRepository->validateBookingProgram(self::$cnp, self::$program);
+            if (isset($result[0]['TOTAL']) && $result[0]['TOTAL'] > 0) {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
-
         }
-
     }
 }
